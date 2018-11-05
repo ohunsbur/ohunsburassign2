@@ -1,0 +1,28 @@
+-- CS3319 asm2 script4
+-- Owen Hunsburger
+-- 250 919 957
+
+USE ohunsburassign2db;
+
+-- Show all data
+SELECT * FROM product;
+SELECT * FROM agent;
+SELECT * FROM customer;
+SELECT * FROM purchase;
+
+-- View
+CREATE VIEW v AS SELECT firstname, lastname, description, amount, cost, amount*cost FROM customer, product, purchase WHERE customer.customerid = purchase.customerid AND product.productid = purchase.productid;
+SELECT * FROM v;
+SELECT * FROM v WHERE amount*cost > 100;
+
+-- Delete my product
+SELECT * FROM product;
+DELETE FROM product WHERE productid = '97';
+SELECT * FROM product;
+
+-- Delete agents from Springfield
+SELECT * FROM agent;
+DELETE FROM agent WHERE city = 'Springfield';
+SELECT * FROM agent;
+-- The row for the agents from Springfield was not deleted because it is a parent is a parent and the agentid is used as a foreign key.
+-- This would cause issue in the customer table, as Hugh Grant (agent from Sprinfield) is the agent for Homer Simpson and Monty Burns.

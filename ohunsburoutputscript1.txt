@@ -1,0 +1,67 @@
+Warning: Using a password on the command line interface can be insecure.
+--------------
+SHOW databases
+--------------
+
+Database
+information_schema
+mysql
+ohunsburassign2db
+performance_schema
+--------------
+DROP DATABASE ohunsburassign2db
+--------------
+
+--------------
+CREATE DATABASE ohunsburassign2db
+--------------
+
+--------------
+GRANT USAGE ON *.* TO 'ta'@'localhost'
+--------------
+
+--------------
+DROP USER 'ta'@'localhost'
+--------------
+
+--------------
+CREATE USER 'ta'@'localhost' IDENTIFIED BY 'cs3319'
+--------------
+
+--------------
+GRANT ALL PRIVILEGES ON ohunsburassign2db.* TO 'ta'@'localhost'
+--------------
+
+--------------
+FLUSH PRIVILEGES
+--------------
+
+--------------
+SHOW TABLES
+--------------
+
+--------------
+CREATE TABLE product (productid CHAR(2) NOT NULL, description VARCHAR(20), cost DECIMAL(5,2), quantity int, PRIMARY KEY (productid))
+--------------
+
+--------------
+CREATE TABLE agent (agentid CHAR(2) NOT NULL, firstname VARCHAR(30), lastname VARCHAR(30), city VARCHAR(15), commission int, PRIMARY KEY (agentid))
+--------------
+
+--------------
+CREATE TABLE customer (customerid CHAR(2) NOT NULL, firstname VARCHAR(30), lastname VARCHAR(30), city VARCHAR(15), phone VARCHAR(8), agentid CHAR(2), FOREIGN KEY (agentid) REFERENCES agent(agentid), PRIMARY KEY (customerid))
+--------------
+
+--------------
+CREATE TABLE purchase (customerid CHAR(2) NOT NULL, productid CHAR(2) NOT NULL, amount int, FOREIGN KEY (customerid) REFERENCES customer(customerid), FOREIGN KEY (productid) REFERENCES product(productid), PRIMARY KEY (customerid, productid))
+--------------
+
+--------------
+SHOW TABLES
+--------------
+
+Tables_in_ohunsburassign2db
+agent
+customer
+product
+purchase

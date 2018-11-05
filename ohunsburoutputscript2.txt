@@ -1,0 +1,22 @@
+Warning: Using a password on the command line interface can be insecure.
+ERROR 1062 (23000) at line 12: Duplicate entry '66' for key 'PRIMARY'
+--------------
+LOAD DATA LOCAL INFILE 'datafile.txt' INTO TABLE product FIELDS TERMINATED BY ','
+--------------
+
+--------------
+SELECT * FROM product
+--------------
+
+productid	description	cost	quantity
+11	Bike	150.00	200
+12	Socks	2.00	100
+66	Elbow Pads	14.25	120
+78	Knee Pads	12.15	70
+88	Roller Blades	75.00	89
+97	Hockey Stick	89.99	50
+99	Helmet	29.00	30
+--------------
+INSERT INTO product VALUES('66', 'Elbow Pads', '14.25', '120')
+--------------
+

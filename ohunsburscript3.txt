@@ -1,0 +1,64 @@
+-- CS3319 asm2 script3
+-- Owen Hunsburger
+-- 250 919 957
+
+USE ohunsburassign2db;
+
+-- Query 1
+SELECT description FROM product;
+
+-- Query 2
+SELECT distinct(city) FROM customer;
+
+-- Query 3
+SELECT * FROM agent ORDER BY city;
+
+-- Query 4
+SELECT firstname, lastname FROM customer WHERE city="Springfield";
+
+-- Query 5
+SELECT lastname FROM customer WHERE agentid IN (SELECT agentid FROM agent WHERE firstname="Regis");
+
+-- Query 6
+SELECT description FROM product WHERE description LIKE "%pad%";
+
+-- Query 7
+SELECT firstname, lastname, description, amount FROM customer, product, purchase WHERE purchase.customerid = customer.customerid AND purchase.productid = product.productid;
+
+-- Query 8
+SELECT 'Homers Total Purchases', SUM(amount) FROM purchase WHERE customerid IN (SELECT customerid FROM customer WHERE firstname="Homer");
+
+-- Query 9
+SELECT firstname, lastname, SUM(amount) FROM customer, purchase WHERE purchase.customerid = customer.customerid GROUP BY purchase.customerid;
+
+-- Query 10
+SELECT description, quantity FROM product WHERE productid NOT IN (SELECT productid FROM purchase);
+
+-- Query 11
+SELECT description, quantity FROM product WHERE productid NOT IN (SELECT productid FROM purchase WHERE customerid IN (SELECT customerid FROM customer WHERE firstname="Fred" AND lastname="Flintstone"));
+-- part3(part2(part1)))
+-- 	p1	get the customer id of all customers named Fred Flintstone
+-- 	p2	get the product id of all purchases made by those customers
+--	p3	get the product description and quantity of all the products id NOT in those products
+
+-- Query 12
+SELECT firstname, lastname FROM agent WHERE city IN (SELECT customer.city FROM customer, agent WHERE customer.city = agent.city) UNION SELECT firstname, lastname FROM customer WHERE city IN (SELECT agent.city FROM agent, customer WHERE agent.city = customer.city);
+-- part1 UNION part2
+--	p1	get the names of agents who share city with one of their customers
+--	p2	get the names of customers who share city with their agent
+
+-- Query 13
+SELECT 'Total number of Knee Pads purhcased:', SUM(amount) FROM purchase WHERE productid IN(SELECT productid FROM product WHERE description="Knee Pads");
+
+-- Query 14
+SELECT description FROM product WHERE productid IN (SELECT productid FROM purchase GROUP BY productid HAVING COUNT(*) > 3);
+-- part2(part1)
+-- 	p1	get the id of products that are in the purchase table >3 times
+
+-- Query 15
+SELECT firstname, lastname FROM agent WHERE agentid IN (SELECT agentid FROM customer WHERE customerid IN (SELECT customerid FROM purchase WHERE productid IN (SELECT productid FROM product WHERE description="Knee Pads")));
+-- part4(part3(part2(part1)));
+--	p1	get the id of products with the description "Knee Pads"
+--	p2	get the id of customers who have bought that product
+--	p3	get the id of the agents who deal with those customers
+--	p4	get the full name of the agents found
